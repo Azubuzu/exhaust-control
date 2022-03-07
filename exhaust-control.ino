@@ -21,12 +21,12 @@ void setup() {
  */
 void loop() {
    // Keep reading from HC-05 and send to Arduino Serial Monitor
-    if (BTserial.available())
-    {  
+    if (BTserial.available()) {  
         String s = BTserial.readString();
-        Serial.print(s);
+        s.trim();
+        Serial.println(s);
 
-        if(s == "valve_open\r\n") {
+        if(s == "valve_open") {
           BTserial.println("valve_open reveived");
           Serial.println("valve_open reveived");
         }
