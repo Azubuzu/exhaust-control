@@ -22,7 +22,7 @@ void setup() {
 void loop() {
    // Keep reading from HC-05 and send to Arduino Serial Monitor
     if (BTserial.available()) {  
-        String s = BTserial.readString();
+        String s = BTserial.readStringUntil('\r\n');
         s.trim();
         Serial.println(s);
 
