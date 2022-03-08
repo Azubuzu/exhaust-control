@@ -22,13 +22,39 @@ void setup() {
 void loop() {
    // Keep reading from HC-05 and send to Arduino Serial Monitor
     if (BTserial.available()) {  
-        String s = BTserial.readStringUntil('\r\n');
-        s.trim();
-        Serial.println(s);
+        String code = btReadStringAndClean();
+        log(code + " reveived");
 
-        if(s == "valve_open") {
-          BTserial.println("valve_open reveived");
-          Serial.println("valve_open reveived");
+        if (code.equals("valve_open")) {
+          BTserial.println("valve_open OK");
+          log("Valve opened");
+        }
+
+        if (code.equals("valve_close")) {
+          BTserial.println("valve_close OK");
+          log("Valve closed");
+        }
+
+        if (code.startsWith("valve_open_ms")) {
+          BTserial.println("valve_open_ms OK");
+          log("Valve opened for " + code.substring(14) + " ms");
         }
     } 
+}
+
+/**
+* Read string from bluetooth, stop reading when '\r\n' is detected
+* Return trimmed received string
+*/
+String btReadStringAndClean() {
+  String s = BTserial.readStringUntil('\r\n');
+  s.trim();
+  return s;
+}
+
+/**
+* Log a message to the serial port of the arduino
+*/
+void log(String msg) {
+  Serial.println(msg);
 }

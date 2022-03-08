@@ -7,4 +7,4 @@ List of available command for exhaust-control bluetooth module
 | ------ | ------ |
 | valve_open | Fully open the valve |
 | valve_close | Fully close the valve |
-| valve_pos_xx | Open the valve to about xx% |
+| valve_open_ms XXX | Open the valve for XXX ms (no limit) |
