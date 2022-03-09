@@ -36,18 +36,18 @@ void loop() {
         }
 
         if (code.startsWith("valve_open_ms")) {
-          BTserial.println("valve_open_ms OK");
+          BTserial.println("valve_open_ms " + code.substring(14) + " OK");
           log("Valve opened for " + code.substring(14) + " ms");
         }
     } 
 }
 
 /**
-* Read string from bluetooth, stop reading when '\r\n' is detected
+* Read string from bluetooth, stop reading when '\n' is detected
 * Return trimmed received string
 */
 String btReadStringAndClean() {
-  String s = BTserial.readStringUntil('\r\n');
+  String s = BTserial.readStringUntil('\n');
   s.trim();
   return s;
 }
