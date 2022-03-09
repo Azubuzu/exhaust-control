@@ -1,8 +1,11 @@
 #include <SoftwareSerial.h>
-SoftwareSerial BTserial(2, 3); // SRX | STX
-// D2 pin of NANO is SRX-pin of NANO; it will have connection with TX-pin of HC-05 
-// D3 pin of NANO is STX-pin of NANO; it will have connection with RX-pin of HC-05 via voltage divider.
-
+// Configurations ///////////////////////////////////////////////////////////////
+#define BT_TX 2
+#define BT_RX 3
+#define MOSFET_ALIM 4
+#define MOSFET_CONTROL 5
+/////////////////////////////////////////////////////////////////////////////////
+SoftwareSerial BTserial(BT_TX, BT_RX); // (Nano RX , Nano TX)
 /**
  * Init setup
  */
