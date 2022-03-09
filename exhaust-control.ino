@@ -4,6 +4,7 @@
 #define BT_RX 3
 #define MOSFET_ALIM 4
 #define MOSFET_CONTROL 5
+#define FULL_CYCLE_MS 2000
 /////////////////////////////////////////////////////////////////////////////////
 SoftwareSerial BTserial(BT_TX, BT_RX); // (Nano RX , Nano TX)
 /**
@@ -45,6 +46,7 @@ void loop() {
         }
 
         if (code.startsWith("valve_open_ms")) {
+          BTserial.println("valve_open_ms " + code.substring(14) + " OK");
           openValveFor(code.substring(14));
           BTserial.println("valve_open_ms " + code.substring(14) + " OK");
           log("Valve opened for " + code.substring(14) + " ms");
@@ -76,6 +78,9 @@ void stopValve() {
     digitalWrite(MOSFET_CONTROL, LOW);
 }
 
+/**
+ * Open the valve for the given time in ms
+ */
 void openValveFor(String ms) {
 
     int openFor = ms.toInt();
@@ -83,7 +88,9 @@ void openValveFor(String ms) {
     if (openFor == 0) {
         return;
     }
-
+    
+    closeValve();
+    delay(FULL_CYCLE_MS);
     openValve();
     delay(openFor);
     stopValve();
