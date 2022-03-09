@@ -17,6 +17,10 @@ void setup() {
     // HC-05 default serial speed for communication mode is 9600
     BTserial.begin(9600);  
     Serial.println("BTserial started at 9600");
+
+    // Setting up the nano pin to output for the mosfet control
+    pinMode(MOSFET_ALIM, OUTPUT);
+    pinMode(MOSFET_CONTROL, OUTPUT);
 }
 
 /**
@@ -29,11 +33,13 @@ void loop() {
         log(code + " reveived");
 
         if (code.equals("valve_open")) {
+          openValve();
           BTserial.println("valve_open OK");
           log("Valve opened");
         }
 
         if (code.equals("valve_close")) {
+          closeValve();
           BTserial.println("valve_close OK");
           log("Valve closed");
         }
@@ -46,18 +52,42 @@ void loop() {
 }
 
 /**
+ * Open the valve and let it that way
+ */
+void openValve() {
+    digitalWrite(MOSFET_ALIM, HIGH);
+    digitalWrite(MOSFET_CONTROL, HIGH);
+}
+
+/**
+ * Close the valve and let it that way
+ */
+void closeValve() {
+    digitalWrite(MOSFET_ALIM, HIGH);
+    digitalWrite(MOSFET_CONTROL, LOW);
+}
+
+/**
+ * Cut the valve alimentation in order to stop the valve were it is
+ */
+void stopValve() {
+    digitalWrite(MOSFET_ALIM, LOW);
+    digitalWrite(MOSFET_CONTROL, LOW);
+}
+
+/**
 * Read string from bluetooth, stop reading when '\n' is detected
 * Return trimmed received string
 */
 String btReadStringAndClean() {
-  String s = BTserial.readStringUntil('\n');
-  s.trim();
-  return s;
+    String s = BTserial.readStringUntil('\n');
+    s.trim();
+    return s;
 }
 
 /**
 * Log a message to the serial port of the arduino
 */
 void log(String msg) {
-  Serial.println(msg);
+    Serial.println(msg);
 }
