@@ -45,6 +45,7 @@ void loop() {
         }
 
         if (code.startsWith("valve_open_ms")) {
+          openValveFor(code.substring(14));
           BTserial.println("valve_open_ms " + code.substring(14) + " OK");
           log("Valve opened for " + code.substring(14) + " ms");
         }
@@ -73,6 +74,19 @@ void closeValve() {
 void stopValve() {
     digitalWrite(MOSFET_ALIM, LOW);
     digitalWrite(MOSFET_CONTROL, LOW);
+}
+
+void openValveFor(String ms) {
+
+    int openFor = ms.toInt();
+
+    if (openFor == 0) {
+        return;
+    }
+
+    openValve();
+    delay(openFor);
+    stopValve();
 }
 
 /**
