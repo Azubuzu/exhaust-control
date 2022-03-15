@@ -2,7 +2,7 @@
 // Configurations ///////////////////////////////////////////////////////////////
 #define BT_TX 2
 #define BT_RX 3
-#define MOSFET_ALIM 4
+#define MOSFET_POWER 4
 #define MOSFET_CONTROL 5
 #define FULL_CYCLE_MS 2000
 /////////////////////////////////////////////////////////////////////////////////
@@ -20,7 +20,7 @@ void setup() {
     Serial.println("BTserial started at 9600");
 
     // Setting up the nano pin to output for the mosfet control
-    pinMode(MOSFET_ALIM, OUTPUT);
+    pinMode(MOSFET_POWER, OUTPUT);
     pinMode(MOSFET_CONTROL, OUTPUT);
 }
 
@@ -58,7 +58,7 @@ void loop() {
  * Open the valve and let it that way
  */
 void openValve() {
-    digitalWrite(MOSFET_ALIM, HIGH);
+    digitalWrite(MOSFET_POWER, HIGH);
     digitalWrite(MOSFET_CONTROL, HIGH);
 }
 
@@ -66,7 +66,7 @@ void openValve() {
  * Close the valve and let it that way
  */
 void closeValve() {
-    digitalWrite(MOSFET_ALIM, HIGH);
+    digitalWrite(MOSFET_POWER, HIGH);
     digitalWrite(MOSFET_CONTROL, LOW);
 }
 
@@ -74,7 +74,7 @@ void closeValve() {
  * Cut the valve alimentation in order to stop the valve were it is
  */
 void stopValve() {
-    digitalWrite(MOSFET_ALIM, LOW);
+    digitalWrite(MOSFET_POWER, LOW);
     digitalWrite(MOSFET_CONTROL, LOW);
 }
 
