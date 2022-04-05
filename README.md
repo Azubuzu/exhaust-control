@@ -27,6 +27,8 @@ List of available command for exhaust-control bluetooth module
 | D4 | Power supply |
 | D5 | Control |
 
+- Connected on pin 1 (gate) of the mosfets
+
 ## Configure the HC-05
 
 - HC-05 on AT mode (press STATE button on power up)
