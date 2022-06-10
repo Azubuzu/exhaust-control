@@ -1,9 +1,9 @@
 #include <SoftwareSerial.h>
 // Configurations ///////////////////////////////////////////////////////////////
-#define BT_TX 2
-#define BT_RX 3
-#define MOSFET_POWER 4
-#define MOSFET_CONTROL 5 //Logic is inverted for this mosfet
+#define BT_TX 3
+#define BT_RX 2
+#define MOSFET_POWER 5
+#define MOSFET_CONTROL 4 //Logic is inverted for this mosfet
 #define FULL_CYCLE_MS 1300
 /////////////////////////////////////////////////////////////////////////////////
 SoftwareSerial BTserial(BT_TX, BT_RX); // (Nano RX , Nano TX)
@@ -34,19 +34,21 @@ void loop() {
         log(code + " reveived");
 
         if (code.equals("valve_open")) {
-          openValveThenIdle();
+          BTserial.println("valve_open received");
+          openValve();
           BTserial.println("valve_open OK");
           log("Valve opened");
         }
 
         if (code.equals("valve_close")) {
-          closeValveThenIdle();
+          BTserial.println("valve_close received");
+          closeValve();
           BTserial.println("valve_close OK");
           log("Valve closed");
         }
 
         if (code.startsWith("valve_open_ms")) {
-          BTserial.println("valve_open_ms " + code.substring(14) + " OK");
+          BTserial.println("valve_open_ms " + code.substring(14) + " received");
           openValveFor(code.substring(14));
           BTserial.println("valve_open_ms " + code.substring(14) + " OK");
           log("Valve opened for " + code.substring(14) + " ms");
