@@ -14,8 +14,8 @@ List of available command for exhaust-control bluetooth module
 | HC-05 pin | Arduino nano pin |
 | ------ | ------ |
 | STATE | Not connected |
-| RXD | D3 |
-| TXD | D2 |
+| RXD | D2 |
+| TXD | D3 |
 | GND | GND |
 | VCC | 3V3 |
 | EN | Not connected |
@@ -24,8 +24,8 @@ List of available command for exhaust-control bluetooth module
 
 | Arduino nano pin | Mosfet |
 | ------ | ------ |
-| D4 | Power supply |
-| D5 | Control |
+| D4 | Control |
+| D5 | Power supply |
 
 - Connected on pin 1 (gate) of the mosfets
 

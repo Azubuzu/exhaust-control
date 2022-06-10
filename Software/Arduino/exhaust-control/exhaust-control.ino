@@ -1,10 +1,10 @@
 #include <SoftwareSerial.h>
 // Configurations ///////////////////////////////////////////////////////////////
-#define BT_TX 3
 #define BT_RX 2
-#define MOSFET_POWER 5
+#define BT_TX 3
 #define MOSFET_CONTROL 4 //Logic is inverted for this mosfet
-#define FULL_CYCLE_MS 1300
+#define MOSFET_POWER 5
+#define FULL_CYCLE_MS 1000
 /////////////////////////////////////////////////////////////////////////////////
 SoftwareSerial BTserial(BT_TX, BT_RX); // (Nano RX , Nano TX)
 /**
@@ -35,14 +35,14 @@ void loop() {
 
         if (code.equals("valve_open")) {
           BTserial.println("valve_open received");
-          openValve();
+          openValveThenIdle();
           BTserial.println("valve_open OK");
           log("Valve opened");
         }
 
         if (code.equals("valve_close")) {
           BTserial.println("valve_close received");
-          closeValve();
+          closeValveThenIdle();
           BTserial.println("valve_close OK");
           log("Valve closed");
         }
@@ -60,7 +60,7 @@ void loop() {
  * Open the valve and let it that way
  */
 void openValve() {
-    digitalWrite(MOSFET_CONTROL, LOW);
+    digitalWrite(MOSFET_CONTROL, HIGH);
     digitalWrite(MOSFET_POWER, HIGH);
 }
 
@@ -68,7 +68,7 @@ void openValve() {
  * Close the valve and let it that way
  */
 void closeValve() {
-    digitalWrite(MOSFET_CONTROL, HIGH);
+    digitalWrite(MOSFET_CONTROL, LOW);
     digitalWrite(MOSFET_POWER, HIGH);
 }
 
@@ -77,7 +77,7 @@ void closeValve() {
  */
 void stopValve() {
     digitalWrite(MOSFET_POWER, LOW);
-    digitalWrite(MOSFET_CONTROL, HIGH);
+    digitalWrite(MOSFET_CONTROL, LOW);
 }
 
 /**
