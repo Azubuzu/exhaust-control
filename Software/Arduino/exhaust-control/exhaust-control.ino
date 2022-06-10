@@ -3,7 +3,7 @@
 #define BT_TX 2
 #define BT_RX 3
 #define MOSFET_POWER 4
-#define MOSFET_CONTROL 5
+#define MOSFET_CONTROL 5 //Logic is inverted for this mosfet
 #define FULL_CYCLE_MS 2000
 /////////////////////////////////////////////////////////////////////////////////
 SoftwareSerial BTserial(BT_TX, BT_RX); // (Nano RX , Nano TX)
@@ -59,7 +59,7 @@ void loop() {
  */
 void openValve() {
     digitalWrite(MOSFET_POWER, HIGH);
-    digitalWrite(MOSFET_CONTROL, HIGH);
+    digitalWrite(MOSFET_CONTROL, LOW);
 }
 
 /**
@@ -67,7 +67,7 @@ void openValve() {
  */
 void closeValve() {
     digitalWrite(MOSFET_POWER, HIGH);
-    digitalWrite(MOSFET_CONTROL, LOW);
+    digitalWrite(MOSFET_CONTROL, HIGH);
 }
 
 /**
@@ -75,7 +75,7 @@ void closeValve() {
  */
 void stopValve() {
     digitalWrite(MOSFET_POWER, LOW);
-    digitalWrite(MOSFET_CONTROL, LOW);
+    digitalWrite(MOSFET_CONTROL, HIGH);
 }
 
 /**
