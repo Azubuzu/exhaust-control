@@ -4,7 +4,7 @@
 #define BT_RX 3
 #define MOSFET_POWER 4
 #define MOSFET_CONTROL 5 //Logic is inverted for this mosfet
-#define FULL_CYCLE_MS 2000
+#define FULL_CYCLE_MS 1300
 /////////////////////////////////////////////////////////////////////////////////
 SoftwareSerial BTserial(BT_TX, BT_RX); // (Nano RX , Nano TX)
 /**
@@ -34,13 +34,13 @@ void loop() {
         log(code + " reveived");
 
         if (code.equals("valve_open")) {
-          openValve();
+          openValveThenIdle();
           BTserial.println("valve_open OK");
           log("Valve opened");
         }
 
         if (code.equals("valve_close")) {
-          closeValve();
+          closeValveThenIdle();
           BTserial.println("valve_close OK");
           log("Valve closed");
         }
@@ -93,6 +93,24 @@ void openValveFor(String ms) {
     delay(FULL_CYCLE_MS);
     openValve();
     delay(openFor);
+    stopValve();
+}
+
+/**
+* Open the valve then cut the alimentation in order to save power
+*/
+void openValveThenIdle() {
+    openValve();
+    delay(FULL_CYCLE_MS);
+    stopValve();
+}
+
+/**
+* Close the valve then cut the alimentation in order to save power
+*/
+void closeValveThenIdle() {
+    closeValve();
+    delay(FULL_CYCLE_MS);
     stopValve();
 }
 
