@@ -58,16 +58,16 @@ void loop() {
  * Open the valve and let it that way
  */
 void openValve() {
-    digitalWrite(MOSFET_POWER, HIGH);
     digitalWrite(MOSFET_CONTROL, LOW);
+    digitalWrite(MOSFET_POWER, HIGH);
 }
 
 /**
  * Close the valve and let it that way
  */
 void closeValve() {
-    digitalWrite(MOSFET_POWER, HIGH);
     digitalWrite(MOSFET_CONTROL, HIGH);
+    digitalWrite(MOSFET_POWER, HIGH);
 }
 
 /**
